@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&display=swap" rel="stylesheet">
+    <title>Age Calculator</title>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="inp">
+            <input type="date" id="input" placeholder="day/month/year">
+            <button id="button" onclick="calc()">Calculate</button>
+        </div>
+
+        
+        <!-- display -->
+        <ul>
+            <li><span id="years">00</span> years</li>
+            <li><span id="months">00</span> months</li>
+            <li><span id="days">00</span> days</li>
+            <li><span id="hours">00</span> hours</li>
+            <li><span id="minutes">00</span> minutes</li>
+            <li><span id="seconds">00</span> seconds</li>
+        </ul>
+    </div>
+    <!-- js -->
+    <script type="text/javascript">
+        function calc() {
+            let input = document.getElementById("input").value;
+            if (!input) {
+                alert("Please enter a date.");
+                return;
+            }
+           
+            let birthDate = new Date(input);
+            let currentDate = new Date();
+
+            let years = currentDate.getFullYear() - birthDate.getFullYear();
+            let months = currentDate.getMonth() - birthDate.getMonth();
+            let days = currentDate.getDate() - birthDate.getDate();
+            let hours = currentDate.getHours() - birthDate.getHours();
+            let minutes = currentDate.getMinutes() - birthDate.getMinutes();
+            let seconds = currentDate.getSeconds() - birthDate.getSeconds();
+
+            if (seconds < 0) {
+                seconds += 60;
+                minutes--;
+            }
+
+            if (minutes < 0) {
+                minutes += 60;
+                hours--;
+            }
+
+            if (hours < 0) {
+                hours += 24;
+                days--;
+            }
+
+            if (days < 0) {
+                let lastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+                days += lastMonth.getDate();
+                months--;
+            }
+
+            if (months < 0) {
+                months += 12;
+                years--;
+            }
+
+            document.getElementById("years").textContent = years;
+            document.getElementById("months").textContent = months;
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+
+            setTimeout(calc, 1000);
+        }
+    </script>
+</body>
+
+</html>
